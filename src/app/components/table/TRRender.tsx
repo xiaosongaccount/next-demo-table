@@ -7,69 +7,71 @@ import {
 } from "@/src/app/utils";
 import { TokenInfo, MessageData } from "../../types";
 
-const TRRender: FC<{ data: MessageData }> = ({ data }) => {
-  const tdClassName = "py-2 text-sm  text-center";
-  const tdBorderRightClassName =
-    "flex items-center justify-center border-r border-border";
+const RenderAvator = ({ data }: { data: MessageData }) => {
+  const { baseName, baseToken, info } = data;
+  const tokenInfo = JSON.parse(info) as TokenInfo;
+  const firstChar = baseName ? baseName.charAt(0) : "";
 
-  const renderAvator = (data: MessageData) => {
-    const { baseName, baseToken, info } = data;
-    const tokenInfo = JSON.parse(info) as TokenInfo;
-    const firstChar = baseName ? baseName.charAt(0) : "";
-
-    const formatBaseToken = (token: string) => {
-      if (token.length <= 8) {
-        return token;
-      }
-      return `${token.slice(0, 5)}...${token.slice(-3)}`;
-    };
-
-    return (
-      <div className="flex items-center gap-2 pl-4 pr-4 border-r border-border">
-        <div className="w-[30px] h-[30px] rounded-sm flex items-center justify-center shrink-0">
-          {tokenInfo.baseLogo ? (
-            <img
-              alt={baseName}
-              src={tokenInfo.baseLogo}
-              className="w-full h-full object-cover rounded-[4px]"
-            />
-          ) : (
-            <span className=" text-sm font-medium">{firstChar}</span>
-          )}
-        </div>
-        <div className="flex flex-col gap-0">
-          <div className="flex items-center gap-1">
-            <span className="text-sm ">{baseName}</span>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                const url =
-                  tokenInfo.website || tokenInfo.twitter || tokenInfo.telegram;
-                if (url) {
-                  window.open(url, "_blank");
-                } else {
-                  window.open(
-                    `https://x.com/search?q=($${baseName} OR ${baseToken})`,
-                    "_blank"
-                  );
-                }
-              }}
-              className="flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity shrink-0"
-            >
-              <img src="/search-icon.svg" className="w-[11px] h-[11px]" />
-            </button>
-          </div>
-          <span className="text-sm text-secondary-text">
-            {formatBaseToken(baseToken)}
-          </span>
-        </div>
-      </div>
-    );
+  const formatBaseToken = (token: string) => {
+    if (token.length <= 8) {
+      return token;
+    }
+    return `${token.slice(0, 5)}...${token.slice(-3)}`;
   };
 
   return (
+    <div className="flex items-center gap-2 pl-4 pr-4 border-r border-border">
+      <div className="w-[30px] h-[30px] rounded-sm flex items-center justify-center shrink-0">
+        {tokenInfo.baseLogo ? (
+          <img
+            alt={baseName}
+            src={tokenInfo.baseLogo}
+            className="w-full h-full object-cover rounded-[4px]"
+          />
+        ) : (
+          <span className=" text-sm font-medium">{firstChar}</span>
+        )}
+      </div>
+      <div className="flex flex-col gap-0">
+        <div className="flex items-center gap-1">
+          <span className="text-sm ">{baseName}</span>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              const url =
+                tokenInfo.website || tokenInfo.twitter || tokenInfo.telegram;
+              if (url) {
+                window.open(url, "_blank");
+              } else {
+                window.open(
+                  `https://x.com/search?q=($${baseName} OR ${baseToken})`,
+                  "_blank"
+                );
+              }
+            }}
+            className="flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity shrink-0"
+          >
+            <img src="/search-icon.svg" className="w-[11px] h-[11px]" />
+          </button>
+        </div>
+        <span className="text-sm text-secondary-text">
+          {formatBaseToken(baseToken)}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+const TRRender: FC<{ data: MessageData }> = ({ data }) => {
+  const tdClassName = "py-2 text-sm text-center";
+  const tdBorderRightClassName =
+    "flex items-center justify-center border-r border-border";
+
+  return (
     <tr className="border-b border-border hover:bg-row-hovered cursor-pointer">
-      <td className="py-2 text-sm text-left">{renderAvator(data)}</td>
+      <td className="py-2 text-sm text-left">
+        <RenderAvator data={data} />
+      </td>
       <td className={tdClassName}>
         <div className={tdBorderRightClassName}>
           <span className="text-sm ">{data.lastTimeDiff}</span>

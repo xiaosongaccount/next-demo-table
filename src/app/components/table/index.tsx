@@ -3,7 +3,7 @@ import TRRender from "./TRRender";
 
 export function Table({ data, status }: { data: MessageData[], status: string }) {
   const headers = [
-    { name: "Token", className: "text-left w-[200px] max-w-[380px]" },
+    { name: "Token", className: "text-left w-[280px] max-w-[380px]" },
     { name: "Age", className: "text-center" },
     { name: "Liq/MC", className: "text-center" },
     { name: "Price", className: "text-center" },
