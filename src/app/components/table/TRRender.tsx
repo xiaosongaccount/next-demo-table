@@ -10,7 +10,7 @@ import { TokenInfo, MessageData } from "../../types";
 const TRRender: FC<{ data: MessageData }> = ({ data }) => {
   const tdClassName = "py-2 text-sm  text-center";
   const tdBorderRightBorderClassName =
-    "flex items-center justify-center border-r border-[var(--color-border)]";
+    "flex items-center justify-center border-r border-border";
 
   const renderAvator = (data: MessageData) => {
     const { baseName, baseToken, info } = data;
@@ -69,14 +69,14 @@ const TRRender: FC<{ data: MessageData }> = ({ data }) => {
 
   return (
     <tr className="border-b border-border hover:bg-row-hovered cursor-pointer">
-      <td className="py-2 text-sm  text-left">{renderAvator(data)}</td>
+      <td className="py-2 text-sm text-left">{renderAvator(data)}</td>
       <td className={tdClassName}>
         <div className={tdBorderRightBorderClassName}>
           <span className="text-sm ">{data.lastTimeDiff}</span>
         </div>
       </td>
       <td className={tdClassName}>
-        <div className="flex flex-col items-center justify-center border-r border-border">
+        <div className={tdBorderRightBorderClassName}>
           <span className="text-sm ">{numberFormat(data.liquidity)}</span>
           <span className="text-sm text-secondary-text">
             {numberFormat(data.marketCap)}
@@ -96,7 +96,7 @@ const TRRender: FC<{ data: MessageData }> = ({ data }) => {
         </div>
       </td>
       <td className={tdClassName}>
-        <div className="flex flex-col items-center justify-center border-r border-border">
+        <div className={tdBorderRightBorderClassName}>
           <span className="text-sm ">
             {data.buyCount24h + data.sellCount24h}
           </span>
