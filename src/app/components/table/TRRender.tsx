@@ -9,7 +9,7 @@ import { TokenInfo, MessageData } from "../../types";
 
 const TRRender: FC<{ data: MessageData }> = ({ data }) => {
   const tdClassName = "py-2 text-sm  text-center";
-  const tdBorderRightBorderClassName =
+  const tdBorderRightClassName =
     "flex items-center justify-center border-r border-border";
 
   const renderAvator = (data: MessageData) => {
@@ -71,12 +71,12 @@ const TRRender: FC<{ data: MessageData }> = ({ data }) => {
     <tr className="border-b border-border hover:bg-row-hovered cursor-pointer">
       <td className="py-2 text-sm text-left">{renderAvator(data)}</td>
       <td className={tdClassName}>
-        <div className={tdBorderRightBorderClassName}>
+        <div className={tdBorderRightClassName}>
           <span className="text-sm ">{data.lastTimeDiff}</span>
         </div>
       </td>
       <td className={tdClassName}>
-        <div className={tdBorderRightBorderClassName}>
+        <div className={tdBorderRightClassName}>
           <span className="text-sm ">{numberFormat(data.liquidity)}</span>
           <span className="text-sm text-secondary-text">
             {numberFormat(data.marketCap)}
@@ -84,19 +84,19 @@ const TRRender: FC<{ data: MessageData }> = ({ data }) => {
         </div>
       </td>
       <td className={tdClassName}>
-        <div className={tdBorderRightBorderClassName}>
+        <div className={tdBorderRightClassName}>
           <span className="text-sm ">{priceFormat(data.priceUsd)}</span>
         </div>
       </td>
       <td className={tdClassName}>
-        <div className={tdBorderRightBorderClassName}>
+        <div className={tdBorderRightClassName}>
           <span className={`text-sm ${getColorClass(data.priceChange24h)}`}>
             {percentageFormat(data.priceChange24h)}
           </span>
         </div>
       </td>
       <td className={tdClassName}>
-        <div className={tdBorderRightBorderClassName + " flex-col"}>
+        <div className={tdBorderRightClassName + " flex-col"}>
           <span className="text-sm ">
             {data.buyCount24h + data.sellCount24h}
           </span>
@@ -107,19 +107,19 @@ const TRRender: FC<{ data: MessageData }> = ({ data }) => {
         </div>
       </td>
       <td className={tdClassName}>
-        <div className={tdBorderRightBorderClassName}>
+        <div className={tdBorderRightClassName}>
           <span className="text-sm ">{numberFormat(data.volumeUsd24h)}</span>
         </div>
       </td>
       <td className={tdClassName}>
-        <div className={tdBorderRightBorderClassName}>
+        <div className={tdBorderRightClassName}>
           <span className={`text-sm ${getColorClass(data.priceChange1m)}`}>
             {percentageFormat(data.priceChange1m)}
           </span>
         </div>
       </td>
       <td className={tdClassName}>
-        <div className={tdBorderRightBorderClassName}>
+        <div className={tdBorderRightClassName}>
           <span className={`text-sm ${getColorClass(data.priceChange5m)}`}>
             {percentageFormat(data.priceChange5m)}
           </span>
