@@ -1,5 +1,5 @@
 import { MessageData } from "../../types";
-import RenderRow from "./RenderRow";
+import TRRender from "./TRRender";
 
 export function Table({ data, status }: { data: MessageData[], status: string }) {
   const headers = [
@@ -15,13 +15,13 @@ export function Table({ data, status }: { data: MessageData[], status: string })
     { name: "1h%", className: "text-center" },
   ];
   return (
-    <table className="w-full border-collapse">
+    <table className="w-full">
       <thead>
-        <tr className="border-b border-[var(--color-border)]">
+        <tr className="border-b border-border">
           {headers.map((th, index) => (
             <th
               key={index}
-              className={`px-4 py-4 text-xs font-medium text-[var(--color-secondary-text)] ${
+              className={`px-4 py-4 text-xs font-medium text-secondary-text ${
                 th.className ? ` ${th.className}` : ""
               }`}
             >
@@ -35,7 +35,7 @@ export function Table({ data, status }: { data: MessageData[], status: string })
           <tr>
             <td colSpan={headers.length} className="text-center">
               <div className="animate-pulse flex items-center justify-center h-100">
-                <span className="text-sm text-[var(--color-secondary-text)]">
+                <span className="text-sm">
                   Loading...
                 </span>
               </div>
@@ -45,13 +45,13 @@ export function Table({ data, status }: { data: MessageData[], status: string })
           <tr>
             <td colSpan={headers.length} className="text-center">
               <div className="flex items-center justify-center h-100">
-                <span className="text-sm text-red-500">Error loading data</span>
+                <span className="text-sm text-red-500">Loading Error</span>
               </div>
             </td>
           </tr>
         ) : (
           data.map((item) => (
-            <RenderRow key={item.baseToken} data={item} />
+            <TRRender key={item.baseToken} data={item} />
           ))
         )}
       </tbody>

@@ -6,11 +6,9 @@ export const metadata: Metadata = {
   description: "Trending Token List",
 };
 
-export default function RootLayout({
+export default function App({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body>{children}</body>

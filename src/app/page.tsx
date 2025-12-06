@@ -1,26 +1,17 @@
 "use client";
 import { useEffect, useState, useCallback, useRef } from "react";
 import { wsService } from "./network";
-import { MessageData, Message } from "./types";
 import { Table } from "./components/table";
+import { MessageData, Message } from "./types";
 
-const Home = () => {
-  const reconnectCount = useRef(0);
-  const [status, setStatus] = useState<"error" | "loading" | "success">(
-    "loading"
-  );
+const App = () => {
+  const reconnectNumber = useRef(0);
   const [data, setData] = useState<MessageData[]>([]);
-  const handleMessage = useCallback((data: Message) => {
-    if (data.data) {
-      reconnectCount.current = 0;
-      setStatus("success");
-      setData(data.data);
-    }
-  }, []);
+  const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
 
   const handleDisconnected = useCallback(() => {
-    reconnectCount.current++;
-    if (reconnectCount.current > 3) {
+    reconnectNumber.current++;
+    if (reconnectNumber.current > 3) {
       setStatus("error");
       wsService.socket.disconnect();
     }
@@ -37,25 +28,31 @@ const Home = () => {
     });
   }, []);
 
+  const handleMessage = useCallback((data: Message) => {
+    if (data.data) {
+      setStatus("success");
+      setData(data.data);
+      reconnectNumber.current = 0;
+    }
+  }, []);
+
   useEffect(() => {
     const TOPIC = "trending";
     wsService.socket.subscribe(TOPIC, handleMessage);
-    wsService.socket.onDisconnect(handleDisconnected);
     wsService.socket.onConnected(handleConnected);
+    wsService.socket.onDisconnect(handleDisconnected);
     return () => {
       wsService.socket.unsubscribe(TOPIC, handleMessage);
-      wsService.socket.offDisconnect(handleDisconnected);
       wsService.socket.offConnected(handleConnected);
+      wsService.socket.offDisconnect(handleDisconnected);
     };
   }, [handleMessage, handleDisconnected, handleConnected]);
 
   return (
-    <div className="min-h-screen">
-      <div className="overflow-x-auto">
-        <Table data={data} status={status} />
-      </div>
+    <div className="w-full h-full border border-border">
+      <Table data={data} status={status} />
     </div>
   );
 };
 
-export default Home;
+export default App;

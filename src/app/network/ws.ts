@@ -13,20 +13,20 @@ type OnMessage<Message> =
     });
 
 export default class WebSocketUtil<Message> {
-  public ws: WebSocket | null = null;
-  private sendQueue: object[] = [];
+  private url: string;
   private isConnected = false;
-  private reconnectTimer: NodeJS.Timeout | null = null;
-  private reconnectIntervalSeconds = 1;
   private allowReconnect = true;
+  public ws: WebSocket | null = null;
+  private reconnectTimer: NodeJS.Timeout | null = null;
+  private sendQueue: object[] = [];
+  private reconnectIntervalSeconds = 1;
+  private eventListeners = {
+    connected: [] as (() => void)[],
+    disconnected: [] as (() => void)[],
+  };
   private listeners = {} as {
     [key in keyof MessageCallback<Message>]: MessageCallback<Message>[key][];
   };
-  private eventListeners = {
-    disconnected: [] as (() => void)[],
-    connected: [] as (() => void)[],
-  };
-  private url: string;
   public onMessage: OnMessage<Message>;
 
   constructor(url: string) {
@@ -80,7 +80,7 @@ export default class WebSocketUtil<Message> {
     this.eventListeners.disconnected.forEach((cb) => cb());
   };
 
-  /** 收到消息 */
+  /** 接收消息 */
   private handleMessage = (event: MessageEvent) => {
     if (typeof this.onMessage === "function") {
       const { topic, data, ping } = this.onMessage(event);
