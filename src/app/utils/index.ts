@@ -88,11 +88,11 @@ export function timeFormat(seconds: number): string {
 }
 
 export const numberFormat = (value: number) => {
-  const unit = ["", "K", "M", "B"];
   let index = 0;
+  const unit = ["", "K", "M", "B"];
   while (Math.abs(value) > 1000 && index < unit.length - 1) {
-    value = value / 1000;
     index++;
+    value = value / 1000;
   }
   return `${value.toFixed(2)}${unit[index] || ""}`;
 };

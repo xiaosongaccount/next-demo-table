@@ -96,7 +96,7 @@ const TRRender: FC<{ data: MessageData }> = ({ data }) => {
         </div>
       </td>
       <td className={tdClassName}>
-        <div className={tdBorderRightBorderClassName}>
+        <div className={tdBorderRightBorderClassName + " flex-col"}>
           <span className="text-sm ">
             {data.buyCount24h + data.sellCount24h}
           </span>
